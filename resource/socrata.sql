@@ -1,0 +1,52 @@
+ (
+  `primary_id` int unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(1000) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `id` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `parent_fxf` text CHARACTER SET utf8 COLLATE utf8_general_ci NULL,
+  `description` text CHARACTER SET utf8 COLLATE utf8_general_ci NULL,
+  `attribution` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `attribution_link` text CHARACTER SET utf8 COLLATE utf8_general_ci NULL,
+  `contact_email` varchar(500) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `type` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `updatedAt` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `createdAt` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `metadata_updated_at` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `data_updated_at` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `page_views_last_week` int DEFAULT NULL,
+  `page_views_last_month` int DEFAULT NULL,
+  `page_views_total` int DEFAULT NULL,
+  `page_views_last_week_log` double DEFAULT NULL,
+  `page_views_last_month_log` double DEFAULT NULL,
+  `page_views_total_log` double DEFAULT NULL,
+  `columns_name` text CHARACTER SET utf8 COLLATE utf8_general_ci NULL,
+  `columns_field_name` text CHARACTER SET utf8 COLLATE utf8_general_ci NULL,
+  `columns_datatype` text CHARACTER SET utf8 COLLATE utf8_general_ci NULL,
+  `columns_description` text CHARACTER SET utf8 COLLATE utf8_general_ci NULL,
+  `columns_format` text CHARACTER SET utf8 COLLATE utf8_general_ci NULL,
+  `download_count` int DEFAULT NULL,
+  `provenance` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `lens_view_type` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `blob_mime_type` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `hide_from_data_json` tinyint(1) NULL DEFAULT NULL COMMENT 'bool',
+  `publication_date` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+
+  `categories` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `tags` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `domain_tags` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `domain_metadata` text CHARACTER SET utf8 COLLATE utf8_general_ci NULL,
+
+  `domain` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `license` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL,
+
+  `permalink` text CHARACTER SET utf8 COLLATE utf8_general_ci NULL,
+  `link` text CHARACTER SET utf8 COLLATE utf8_general_ci NULL,
+
+  `owner_id` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `user_type` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `display_name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+
+  `data_source` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+
+  PRIMARY KEY (`primary_id`),
+  UNIQUE KEY (`id`)
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_bin ROW_FORMAT = Compact;
