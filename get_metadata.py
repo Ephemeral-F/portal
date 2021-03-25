@@ -1,4 +1,6 @@
 import requests
+import pymysql
+
 
 portal_list = [
     # ("annuario.comune.fi.it", "https://data.comune.fi.it/datastore/api/package_search"),
@@ -22,7 +24,7 @@ portal_list = [
     ]
 
 
-def get_json(url, row, start, retry=3):
+def get_json(url, row, start, retry=7):
     payload = {'rows': row, 'start': start}
     headers = {'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36'}
     proxies = {"http": None, "https": None}
@@ -50,6 +52,7 @@ def get_metadata(portal_name, portal_url):
     except Exception as e:
         print(e)
         print("error in get_metadata: ", portal_name, portal_url)
+        return False
     else:
         dic = r.json()
         count = dic['result']['count']
@@ -63,6 +66,7 @@ def get_metadata(portal_name, portal_url):
             text = get_json(portal_url, count - last, last)
             f.write(text)
         print('get success')
+        return True
 
 
 def get_rest(portal_name, portal_url, start):
@@ -74,11 +78,12 @@ def get_rest(portal_name, portal_url, start):
     except Exception as e:
         print(e)
         print("error in get_metadata")
+        return False
     else:
         dic = r.json()
         count = dic['result']['count']
         page_num = 100
-        with open('json/' + portal_name, 'w', encoding='utf-8') as f:
+        with open('json/' + portal_name, 'a+', encoding='utf-8') as f:
             for i in range(start, count // page_num):
                 text = get_json(portal_url, page_num, i * page_num)
                 f.write(text)
@@ -87,13 +92,30 @@ def get_rest(portal_name, portal_url, start):
             text = get_json(portal_url, count - last, last)
             f.write(text)
         print('get success')
+        return True
 
 
 if __name__ == '__main__':
     requests.packages.urllib3.disable_warnings()
-    requests.adapters.DEFAULT_RETRIES = 5
-    for portal in portal_list:
-        get_metadata(portal[0], portal[1])
-    # get_rest("dati.veneto.it", "https://dati.veneto.it/SpodCkanApi/api/3/action/package_search", 0)
+    requests.adapters.DEFAULT_RETRIES = 10
+
+    connection = pymysql.connect(host='localhost',  # host属性
+                                 port=3306,
+                                 user='root',  # 用户名
+                                 password='mysql',  # 此处填登录数据库的密码
+                                 db='portals',  # 数据库名
+                                 )
+    cur = connection.cursor()
+    cur.execute('select `name`, url, api_url FROM failed WHERE save_file=0')
+    results = cur.fetchall()
+    for res in results:
+        is_successful = get_metadata(res[0], res[2]+'api/3/action/package_search')
+        if is_successful:
+            cur.execute("update failed set save_file=1 where `name` = '{}'".format(res[0]))
+            connection.commit()
+
+    # for portal in portal_list:
+    #     get_metadata(portal[0], portal[1])
+    # get_rest("daten.hamburg.de", "https://suche.transparenz.hamburg.de/api/3/action/package_search", 1097)
 
 

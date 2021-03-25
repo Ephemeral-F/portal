@@ -55,7 +55,7 @@ class Socrata:
 
     def save_metadata(self, json_dic):
         results = self.get_results(json_dic)
-        if results is None or len(results)==0:
+        if results is None or len(results) == 0:
             print('results is None or len(results)==0')
             return True
         sql = 'INSERT IGNORE INTO `{}`(`name`, `id`, `parent_fxf`, `description`, `attribution`, `attribution_link`, ' \
@@ -66,7 +66,7 @@ class Socrata:
               '`lens_view_type`, `blob_mime_type`, `hide_from_data_json`, `publication_date`, `categories`, `tags`, ' \
               '`domain_tags`, `domain_metadata`, `domain`, `license`, `permalink`, `link`, `owner_id`, `user_type`, ' \
               '`display_name`, `data_source`) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s,' \
-              ' %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s);'\
+              ' %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s);' \
             .format(self.domain)
         values = []
         for result in results:
@@ -313,4 +313,3 @@ if __name__ == '__main__':
     # get_socrata_metadata()
     # get_failed_10000()
     test()
-
